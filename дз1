@@ -1,0 +1,47 @@
+using Microsoft.SqlServer.Server;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("---------------------------------------------------------------------------");
+            Console.WriteLine(format: "{0,0} {1,17} {2,31}",
+                arg0:"Type" +"\t"+ "Byte(s) of memory",
+                arg1:"Min",
+                arg2:"Max");
+            Console.WriteLine("---------------------------------------------------------------------------");
+            Console.WriteLine(format: "{0,0} {1,33} {2,31}",
+                arg0: "sbyte" + "\t" + sizeof(sbyte), arg1: sbyte.MinValue, arg2: sbyte.MaxValue);
+            Console.WriteLine(format: "{0,0} {1,33} {2,31}",
+                arg0:"byte" + "\t" + sizeof(byte), arg1:byte.MinValue, arg2: byte.MaxValue);
+            Console.WriteLine(format: "{0,0} {1,33} {2,31}",
+                arg0: "short" + "\t" + sizeof(short), arg1: short.MinValue, arg2: short.MaxValue);
+            Console.WriteLine(format: "{0,0} {1,33} {2,31}",
+                arg0: "ushort" + "\t" + sizeof(ushort), arg1: ushort.MinValue, arg2: ushort.MaxValue);
+            Console.WriteLine(format: "{0,0} {1,33} {2,31}",
+                arg0: "int" + "\t" + sizeof(int), arg1: int.MinValue, arg2: int.MaxValue);
+            Console.WriteLine(format: "{0,0} {1,33} {2,31}",
+                arg0: "uint" + "\t" + sizeof(uint), arg1: uint.MinValue, arg2: uint.MaxValue);
+            Console.WriteLine(format: "{0,0} {1,33} {2,31}",
+                arg0: "long" + "\t" + sizeof(long), arg1: long.MinValue, arg2: long.MaxValue);
+            Console.WriteLine(format: "{0,0} {1,33} {2,31}",
+                arg0: "ulong" + "\t" + sizeof(ulong), arg1: ulong.MinValue, arg2: ulong.MaxValue);
+            Console.WriteLine(format: "{0,0} {1,33} {2,31}",
+                arg0: "float" + "\t" + sizeof(float), arg1: float.MinValue, arg2: float.MaxValue);
+            Console.WriteLine(format: "{0,0} {1,33} {2,31}",
+                arg0: "double" + "\t" + sizeof(double), arg1: double.MinValue, arg2: double.MaxValue);
+            Console.WriteLine(format: "{0,0} {1,32} {2,31}",
+                arg0: "decimal" + "\t" + sizeof(decimal), arg1: decimal.MinValue, arg2: decimal.MaxValue);
+            Console.WriteLine("---------------------------------------------------------------------------");
+
+
+        }
+    }
+}
