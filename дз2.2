@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace дз2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("введите число от 0 до 255");
+            try
+            {
+                string x = Console.ReadLine();
+                float y =float.Parse(x);                
+                if (y > 255)                
+                    Console.WriteLine("ошибка, число больше 255");               
+                else if (y < 0)
+                    Console.WriteLine("ошибка, число меньше 0-255");
+                else
+                {   
+                    Console.WriteLine("введите число от 0 до 255,но не равное 0");               
+                    string x2 = Console.ReadLine();
+                    float y2 = float.Parse(x2);
+                    if (y2 > 255)
+                        Console.WriteLine("ошибка, число больше 255");
+                    else if (y2 <= 0)
+                        Console.WriteLine("ошибка, число меньше или равно 0");
+                    else
+                        Console.WriteLine("результат: " + y / y2);
+                }
+            }
+            catch 
+            {
+                Console.WriteLine("это не число или оно не целое");//для дробных чисел не вышло
+            }
+        }
+    }
+}
