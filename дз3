@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace дз3
+{
+    internal class Program
+    {
+        static int x = 1001; //максмальное число +1
+        static int[] Prost = new int[x];//массив простых чисел
+        static void ReshetoIratosfena()//удаляет не простые числа из массива простых чисел 
+        {
+            for (int i = 2; i < x; i++)//реализует решето эратосфена
+            {
+                if (Prost[i] == 0)
+                {
+                    for (int j = 2 * i; j < x; j += i)//находит не простые числа
+                    {
+                        Prost[j]=-1;//обозначение числа не простым
+                    }
+                }
+            }
+        }
+        static void Rasbitie(int y)//дробит число на простые
+        {
+            int k = y;
+            int s = 0; //флажок, указывает с какого момента выводится "Х"
+            string str = System.String.Empty;//пустая строка
+            int i = 1000;
+            while (i <= x & y>1)//дробление
+            {
+                if (y % i == 0 & Prost[i] == 0)
+                {
+                    if (s == 1)
+                        str = str + " X " + i;//записывает делители в строку
+                    else
+                    {
+                        str = str +" "+ i;//записывает делители в строку
+                        s = 1;
+                    }
+                    y = y / i;
+                }
+                else
+                    i--;
+            }
+            Console.WriteLine($"простые множители {k}: {str}");//вывод
+        }
+        static void Main(string[] args)
+        {
+            int a;
+            a =Convert.ToInt32(Console.ReadLine()); //ввод числа
+            ReshetoIratosfena();
+            Rasbitie(a); //вызовы функций
+        }
+    }
+}
