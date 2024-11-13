@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace дз6
+{
+    public class Figure
+    {
+        int Layer;
+        string EdgeColor = "black";
+        float EdgeThickness = 1;
+        readonly string FillColor = "white";
+    }
+    public class Point
+    {
+        float X_Position;
+        float Y_Position;
+    }
+    sealed public class Circle : Figure
+    {
+        float Radius;
+        Point Center;
+    }
+    sealed public class Edge : Figure 
+    {
+        Point FirstPoint;
+        Point SecondPoint;
+    }
+    sealed public class Polygon : Figure
+    {
+        List<Point> Points;
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+        }
+    }
+}
