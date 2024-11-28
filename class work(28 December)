@@ -1,0 +1,36 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace практика
+{
+    public class Fraction
+    {
+        public int Numerator { get; set; }
+        public int Denominator { get; set; }
+        public Fraction(int numerator, int denominator)
+        {
+            Numerator = numerator;
+            Denominator = denominator;
+        }
+        public override string ToString()
+        {
+            return $"{Numerator}/{Denominator}";
+        }
+        public static Fraction operator *(Fraction a, Fraction b)
+        {
+            return new Fraction {a.Numerator * b.Numerator, a.Denominator * b.Denominator };
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Fraction f1 = new Fraction(1, 2);
+            Fraction f2 = new Fraction(2, 3);
+            Console.WriteLine(f1*f2);
+        }
+    }
+}
