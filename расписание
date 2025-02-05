@@ -1,0 +1,104 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace расписание
+{
+    internal class Program
+    {
+        public class Week
+        {
+            public string day;
+            public Day[] days = new Day[6] { new Day(), new Day(), new Day(), new Day(), new Day(), new Day() };
+            public Week()
+            {
+                Day[] days = new Day[6];
+            }
+
+            public void ReternerOfweek()
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    Console.WriteLine($"день {i+1}:");
+                    days[i].ReternerOfday();
+                }
+            }
+            public void AssignW()
+            {
+                Console.WriteLine("введите номер дня, от 1 до 6");
+                string we = Console.ReadLine();
+                int u = int.Parse(we);
+                if (u > 6)
+                    Console.WriteLine("в расписании нет такого дня, попробуйте сновв");
+                else
+                {
+                    u = u - 1;
+                    days[u].AssignD();
+                }
+            }
+        }
+        public class Day
+        {
+            public string lesson;
+            public Lesson[] lessons = new Lesson[8] { new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson() };
+            public Day()
+            {
+                Lesson[] lessons = new Lesson[8];
+            }
+            public void ReternerOfday()
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    Console.WriteLine($"...урок {i+1}:");
+                    lessons[i].ReternerOfles();
+                }
+            }
+            public void AssignD()
+            {
+                Console.WriteLine("введите номер урока от 1 до 8");
+                string da = Console.ReadLine();
+                int v = int.Parse(da);
+                if (v > 8)
+                    Console.WriteLine("нет такого урока, попробуйте снова");
+                else
+                {
+                    v = v - 1;
+                    lessons[v].AssignL();
+                }
+            }
+        }
+        public class Lesson
+        {
+            public string lesson;
+            public void ReternerOfles()
+            {
+                Console.WriteLine($"......{lesson}");
+            }
+            public void AssignL() 
+            {
+                Console.WriteLine("введите урок");
+                string le = Console.ReadLine();
+                lesson = le;
+            }
+        }
+        static void Main(string[] args)
+        {   
+            Week a = new Week();
+            Console.WriteLine("введите -1 если хотите задать всё расписание сразу или количество задаваемых уроков");
+            string b = Console.ReadLine();
+            int o = int.Parse(b);
+            if (o != -1)
+            {
+                for (int i = 0; i < o; i++)
+                    a.AssignW();
+            }
+            else
+                a.AssignW();
+            a.ReternerOfweek();
+        }
+
+    }
+    
+}
