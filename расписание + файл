@@ -1,0 +1,117 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
+using static расписание.Program;
+
+namespace расписание
+{
+    internal class Program
+    {
+        
+        public class Week
+        {
+            public string day;
+            public Day[] days = new Day[6] { new Day(), new Day(), new Day(), new Day(), new Day(), new Day() };
+            public Week()
+            {
+                Day[] days = new Day[6];
+            }
+
+            public void ReternerOfweek(string path)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
+                    {
+                        sw.WriteLine($".............................day {i + 1}:");
+                    }
+                    days[i].ReternerOfday(path);
+                }
+            }
+            public void AssignW(string path)
+            {
+                for (int i = 0;i < 6;i++)
+                {
+                    days[i].AssignD(i, path);
+                }
+            }
+        }
+        public class Day
+        {
+            public string lesson;
+            public Lesson[] lessons = new Lesson[8] { new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson() };
+            public Day()
+            {
+                Lesson[] lessons = new Lesson[8];
+            }
+            public void ReternerOfday(string path)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
+                    {
+                        sw.WriteLine($"............lesson {i + 1}:");
+                    }
+                    lessons[i].ReternerOfles(path);
+                }
+            }
+            public void AssignD(int n, string path)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    lessons[i].AssignL(n,i,path);
+                }
+            }
+        }
+        public class Lesson
+        {
+            public string lesson;
+            public void ReternerOfles(string path)
+            {
+                using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
+                {
+                    sw.WriteLine(lesson);
+                }
+            }
+            public void AssignL(int d,int l,string path) 
+            {
+                using (StreamReader sr = new StreamReader(path))
+                {
+                    for (int i = 0; i < 1 + d * 17+2+l*2; i++)
+                    {
+                        string y = sr.ReadLine();
+                    }
+                    lesson = sr.ReadLine();
+                }
+            }
+        }
+        static void Main(string[] args)
+        {
+            string path = @"C:\Users\Матфей\OneDrive\Рабочий стол\домашки по инфе\расписание.txt";
+            //при необходимости меняйте путь как вам удобно
+            FileInfo file = new FileInfo(path);
+            if (!file.Exists)
+            {
+                File.Create(path);
+                Console.WriteLine("file was create, run programm again");
+            }
+            else
+            {
+                Week a = new Week();
+                a.AssignW(path);
+                using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.Default))
+                {
+                    sw.WriteLine();
+                }
+                a.ReternerOfweek(path);
+                Console.WriteLine("программа отработала, был пересахранён файл с расписанием, ждите обновлений, скоро будут новые функции(может быть)");
+            }
+        }
+
+    }
+    
+}
