@@ -1,1 +1,311 @@
-﻿
+﻿sing System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
+using static расписание.Program;
+namespace расписание
+{
+    internal class Program
+    {
+
+        public class Week
+        {
+            public string day;
+            public Day[] days = new Day[6] { new Day(), new Day(), new Day(), new Day(), new Day(), new Day() };
+            public Week()
+            {
+                Day[] days = new Day[6];
+            }
+            public void ReternerOfweek(string path)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
+                    {
+                        sw.WriteLine($".............................day {i + 1}:");
+                    }
+                    days[i].ReternerOfday(path);
+                }
+            }
+            public void Assign(string path)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    days[i].Assign(i, path);
+                }
+            }
+            public void comp()
+            {
+                Console.WriteLine("введите день");
+                string d = Console.ReadLine();
+                int di = -1;
+                if (d.ToLower() == "monday") di = 0; if (d.ToLower() == "tuesday") di = 1; if (d.ToLower() == "wedhesday") di = 2; if (d.ToLower() == "thursday") di = 3; if (d.ToLower() == "friday") di = 4; if (d.ToLower() == "saturday") di = 5;
+                if (d.Length == 1)
+                {
+                    di = int.Parse(d);
+                }
+                if (di == -1)
+                {
+                    Console.WriteLine("error,try again");
+                }
+                else
+                {
+                    days[di].comp2();
+                }
+                
+            }
+        }
+        public class Day
+        {
+            public string lesson;
+            public Lesson[] lessons = new Lesson[8] { new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson(), new Lesson() };
+            public Day()
+            {
+                Lesson[] lessons = new Lesson[8];
+            }
+            public void ReternerOfday(string path)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
+                    {
+                        sw.WriteLine($"............lesson {i + 1}:");
+                    }
+                    lessons[i].ReternerOfles(path);
+                }
+            }
+            public void Assign(int n, string path)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    lessons[i].Assign(n, i, path);
+                }
+            }
+            public void comp2()
+            {
+                Console.WriteLine("введите урок 1,2,3,4,5,6,7 или 8");
+                string l = Console.ReadLine();
+                int li = int.Parse(l);
+                if (li < 1 || li > 8)
+                {
+                    Console.WriteLine("idiot, its incorrect, try again");
+                }
+                else
+                {
+                    if (li == 1)
+                    {
+                        lessons[li - 1].comp3(-90, lessons[li].timeST);
+                    }
+                    if (li == 8)
+                    {
+                        lessons[li - 1].comp3(lessons[li - 2].timeFI, (23*60+59)*2);
+                    }
+                    if(li != 1 & li != 8)
+                    {
+                        lessons[li - 1].comp3(lessons[li - 2].timeFI, lessons[li].timeST);
+                    }
+                }
+            }
+        }
+        public class Lesson
+        {
+            public string lesson;
+            public int timeST = -1;
+            public int timeSTnew;
+            public int timeFI = -1;
+            public int timeFInew;
+            int level = 0;
+            public void ReternerOfles(string path)
+            {
+                string h1= null;
+                string h2= null;
+                string m1= null;
+                string m2= null;
+                if (timeST / 60 < 10)
+                {
+                    h1 = "0";
+                }
+                if (timeFI / 60 < 10)
+                {
+                    h2 = "0";
+                }
+                if (timeST %  60 < 10)
+                {
+                    m1= "0";
+                }
+                if (timeFI % 60 < 10)
+                {
+                    m2 = "0";
+                }
+                using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
+                {
+                    if (timeFI == -1 || timeST == -1)
+                    {
+                        sw.WriteLine($"{lesson}(dont info about time)");
+                    }
+                    else
+                    {
+                        sw.WriteLine($"{lesson}({h1}{timeST / 60}:{m1}{timeST % 60} - {h2}{timeFI / 60}:{m2}{timeFI % 60})");
+                    }
+                    
+                }
+            }
+            public void Assign(int d, int l, string path)
+            {
+                using (StreamReader sr = new StreamReader(path))
+                {
+                    for (int i = 0; i < 1 + d * 17 + 2 + l * 2; i++)
+                    {
+                        string y = sr.ReadLine();
+                    }
+                    string lesson2 = sr.ReadLine();
+                    int k = 0;
+                    if (lesson2 != null) 
+                    {
+                        while (lesson2[k] != '(')
+                        {
+                            lesson += lesson2[k];
+                            k++;
+                        }
+                        string stt = null;
+                        k++;
+                        stt += lesson2[k];
+                        string du = "d";
+                        if (stt == du)
+                        {
+                            timeST = -1;
+                            timeFI = -1;
+                        }
+                        else 
+                        {
+                            k++;
+                            stt += lesson2[k];
+                            k += 2;
+                            stt += lesson2[k];
+                            k++;
+                            stt += lesson2[k];
+                            timeST = int.Parse(stt);
+                            timeST = (60 * (timeST / 100)) + (timeST % 100);
+                            k += 4;
+                            stt = null;
+                            stt += lesson2[k];
+                            k++;
+                            stt += lesson2[k];
+                            k += 2;
+                            stt += lesson2[k];
+                            k++;
+                            stt += lesson2[k];
+                            timeFI = int.Parse(stt);
+                            timeFI = (60 * (timeFI / 100)) + (timeFI % 100);
+                        }
+                        
+                    }
+                }
+            }
+            public void comp3(int t1,int t2)
+            {
+                int f = 0;
+                Console.WriteLine("введите время начала урока в формате: ччмм");
+                string tst = Console.ReadLine();
+                if (tst.Length != 4)
+                {
+                    Console.WriteLine("неправильно, теперь запускай заново");
+                    f = 1;
+                }
+                else
+                {
+                    timeSTnew = int.Parse(tst); //добавить проверку на число
+                    if (timeSTnew / 100 > 23)
+                    {
+                        Console.WriteLine("часов столько ну бывает, теперь запускай заново");
+                        f = 1;
+                    }
+                    if (timeSTnew % 100 > 59)
+                    {
+                        Console.WriteLine("минут столько ну бывает, теперь запускай заново");
+                        f = 1;
+                    }
+                    timeSTnew = (60 * (timeSTnew / 100)) + (timeSTnew % 100);
+                    if (t1 > timeSTnew) 
+                    {
+                        Console.WriteLine("пересечение с предедущим уроком, теперь запускай заново");
+                        f = 1;
+                    }
+                    if (f == 0)
+                    {
+                        Console.WriteLine("введите время конца урока в формате: ччмм");
+                        string tfi = Console.ReadLine();
+                        if (tfi.Length != 4)
+                        {
+                            Console.WriteLine("неправильно, теперь запускай заново");
+                            f = 1;
+                        }
+                        else
+                        {
+                            timeFInew = int.Parse(tfi); //добавить проверку на число
+                            if (timeFInew / 100 > 23)
+                            {
+                                Console.WriteLine("часов столько ну бывает, теперь запускай заново");
+                                f = 1;
+                            }
+                            if (timeFInew % 100 > 59)
+                            {
+                                Console.WriteLine("минут столько ну бывает, теперь запускай заново");
+                                f = 1;
+                            }
+                            timeFInew = (60 * (timeFInew / 100)) + (timeFInew % 100);
+                            if (timeFInew > t2 & t2 != -1)
+                            {
+                                Console.WriteLine("пересечение со следущим уроком, теперь запускай заново");
+                                f = 1;
+                            }
+                            if (timeFInew < timeSTnew)
+                            {
+                                Console.WriteLine("конец не может быть раньше начала, теперь запускай заново");
+                                f = 1;
+                            }
+                        }
+                    }
+                    
+                }
+                if (f == 0)
+                {
+                    timeST = timeSTnew;
+                    timeFI = timeFInew;
+                    Console.WriteLine("введите предмет");
+                    lesson = Console.ReadLine();
+                    Console.WriteLine("сложность предмета");
+                    string ls = Console.ReadLine();
+                    level = int.Parse(ls);
+                }
+            }
+        }
+        static void Main(string[] args)
+        {
+            string path = @"C:\Users\Матфей\OneDrive\Рабочий стол\домашки по инфе\расписание.txt";
+            //при необходимости меняйте путь как вам удобно
+            FileInfo file = new FileInfo(path);
+            if (!file.Exists)
+            {
+                File.Create(path);
+                Console.WriteLine("file was create, run programm again");
+            }
+            else
+            {
+                Week a = new Week();
+                a.Assign(path); //считывает файл
+                using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.Default)) //стирает содержимое файла
+                {
+                    sw.WriteLine(); 
+                }
+                a.comp(); //пользователь вводить урок с консоли
+                a.ReternerOfweek(path); //заполняет файл
+                //Console.WriteLine("программа отработала, был пересахранён файл с расписанием, ждите обновлений, скоро будут новые функции(может быть)");
+            }
+        }
+    }
+
+}
