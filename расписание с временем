@@ -1,4 +1,4 @@
-﻿sing System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -47,7 +47,7 @@ namespace расписание
                 {
                     di = int.Parse(d);
                 }
-                if (di == -1)
+                if (di == -1 || di>5)
                 {
                     Console.WriteLine("error,try again");
                 }
@@ -55,7 +55,7 @@ namespace расписание
                 {
                     days[di].comp2();
                 }
-                
+
             }
         }
         public class Day
@@ -101,9 +101,9 @@ namespace расписание
                     }
                     if (li == 8)
                     {
-                        lessons[li - 1].comp3(lessons[li - 2].timeFI, (23*60+59)*2);
+                        lessons[li - 1].comp3(lessons[li - 2].timeFI, (23 * 60 + 59) * 2);
                     }
-                    if(li != 1 & li != 8)
+                    if (li != 1 & li != 8)
                     {
                         lessons[li - 1].comp3(lessons[li - 2].timeFI, lessons[li].timeST);
                     }
@@ -120,10 +120,10 @@ namespace расписание
             int level = 0;
             public void ReternerOfles(string path)
             {
-                string h1= null;
-                string h2= null;
-                string m1= null;
-                string m2= null;
+                string h1 = null;
+                string h2 = null;
+                string m1 = null;
+                string m2 = null;
                 if (timeST / 60 < 10)
                 {
                     h1 = "0";
@@ -132,9 +132,9 @@ namespace расписание
                 {
                     h2 = "0";
                 }
-                if (timeST %  60 < 10)
+                if (timeST % 60 < 10)
                 {
-                    m1= "0";
+                    m1 = "0";
                 }
                 if (timeFI % 60 < 10)
                 {
@@ -150,7 +150,7 @@ namespace расписание
                     {
                         sw.WriteLine($"{lesson}({h1}{timeST / 60}:{m1}{timeST % 60} - {h2}{timeFI / 60}:{m2}{timeFI % 60})");
                     }
-                    
+
                 }
             }
             public void Assign(int d, int l, string path)
@@ -163,7 +163,7 @@ namespace расписание
                     }
                     string lesson2 = sr.ReadLine();
                     int k = 0;
-                    if (lesson2 != null) 
+                    if (lesson2 != null)
                     {
                         while (lesson2[k] != '(')
                         {
@@ -179,7 +179,7 @@ namespace расписание
                             timeST = -1;
                             timeFI = -1;
                         }
-                        else 
+                        else
                         {
                             k++;
                             stt += lesson2[k];
@@ -201,11 +201,11 @@ namespace расписание
                             timeFI = int.Parse(stt);
                             timeFI = (60 * (timeFI / 100)) + (timeFI % 100);
                         }
-                        
+
                     }
                 }
             }
-            public void comp3(int t1,int t2)
+            public void comp3(int t1, int t2)
             {
                 int f = 0;
                 Console.WriteLine("введите время начала урока в формате: ччмм");
@@ -229,7 +229,7 @@ namespace расписание
                         f = 1;
                     }
                     timeSTnew = (60 * (timeSTnew / 100)) + (timeSTnew % 100);
-                    if (t1 > timeSTnew) 
+                    if (t1 > timeSTnew)
                     {
                         Console.WriteLine("пересечение с предедущим уроком, теперь запускай заново");
                         f = 1;
@@ -269,7 +269,7 @@ namespace расписание
                             }
                         }
                     }
-                    
+
                 }
                 if (f == 0)
                 {
@@ -299,7 +299,7 @@ namespace расписание
                 a.Assign(path); //считывает файл
                 using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.Default)) //стирает содержимое файла
                 {
-                    sw.WriteLine(); 
+                    sw.WriteLine();
                 }
                 a.comp(); //пользователь вводить урок с консоли
                 a.ReternerOfweek(path); //заполняет файл
@@ -307,5 +307,4 @@ namespace расписание
             }
         }
     }
-
 }
