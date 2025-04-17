@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace карты
+{
+    public class Player
+    {
+        public List<int> cards = new List<int>(5);
+        public bool f1;
+        public bool f2;
+        public bool st;
+        public int score;
+    }
+    class Program
+    {
+        public void Swapper()
+        {
+            for (int i = 0; i < 5; i++) 
+            { 
+                
+            }
+        }
+        static void Main(string[] args)
+        {
+            Player player1 = new Player();
+            Player player2 = new Player();
+            player1.st = true;
+            player1.f1 = true;
+            player1.f2 = true;
+            player1.score = 0;
+            player2.st = true;
+            player2.f1 = true;
+            player2.f2 = true;
+            player2.score = 0;
+            List<int> AllCards = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36 };
+            Random rnd = new Random();
+            for (int i = 0; i < 5; i++) 
+            {
+                int r = rnd.Next(0, AllCards.Count());
+                player1.cards[i] = AllCards[r];
+                AllCards.RemoveAt(r);
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                int r = rnd.Next(0, AllCards.Count());
+                player2.cards[i] = AllCards[r];
+                AllCards.RemoveAt(r);
+            }
+            while (player1.st == true | player2.st == true)
+            {
+                Console.WriteLine("player 1 get ready");
+                string gerbich = Console.ReadLine();
+                Console.WriteLine(player1.cards);
+                Console.WriteLine("do you want use f1? if yes write 1, else write 0");
+                int operetor = Console.Read();
+                if (operetor == 1) 
+                {
+                    
+                }
+            }
+
+        }
+    }
+}
