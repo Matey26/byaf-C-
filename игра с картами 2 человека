@@ -1,0 +1,186 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace игра
+{
+    internal class Program
+    {
+
+        public class Player
+        {
+            public int Fishka1;
+            public int Fishka2;
+            public List<int> Cards;
+
+        }
+        static void Main(string[] args)
+        {
+            Player player1 = new Player();
+            player1.Cards = new List<int>();
+            player1.Fishka1 = 1;
+            player1.Fishka2 = 1;
+            Player player2 = new Player();
+            player2.Cards = new List<int>();
+            player2.Fishka1 = 1;
+            player2.Fishka2 = 1;
+            int[] AllCards = new int[13] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 };
+            int s = 0;
+            Random rnd = new Random();
+            for (int i = 0; i < 5; i++)
+            {
+                int num = rnd.Next(0, 12);
+                if (AllCards[num] != 0)
+                {
+                    player1.Cards.Add(num + 2);
+                    AllCards[num]--;
+                }
+                else
+                {
+                    i--;
+                    break;
+                }
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                int num = rnd.Next(0, 12);
+                if (AllCards[num] != 0)
+                {
+                    player2.Cards.Add(num+2);
+                    AllCards[num]--;
+                }
+                else
+                {
+                    i = i - 1;
+                    break;
+                }
+            }
+            while (true)
+            {
+                Console.WriteLine($"summ is {s}");
+                Console.WriteLine($"cards player1 {player1.Cards[0]},{player1.Cards[1]},{player1.Cards[2]},{player1.Cards[3]},{player1.Cards[4]},Fishek1 {player1.Fishka1},Fishek2 {player1.Fishka2}");
+                Console.WriteLine($"cards player2 {player2.Cards[0]},{player2.Cards[1]},{player2.Cards[2]},{player2.Cards[3]},{player2.Cards[4]},Fishek1 {player2.Fishka1},Fishek2 {player2.Fishka2}");
+                Console.WriteLine("write number of card(1-5) or 6 to use fishka1 or 7 to use fishka2");
+                Console.WriteLine("Player1");
+                int read1 = int.Parse(Console.ReadLine());
+                if (read1 < 6)
+                {
+                    s += player1.Cards[read1 - 1];
+                    player1.Cards.RemoveAt(read1 - 1);
+                    int num = rnd.Next(0, 12);
+                    while (AllCards[num] == 0)
+                    {
+                        num = rnd.Next(0, 12);
+                    }
+                    player1.Cards.Add(num + 2);
+                    AllCards[num]--;
+                }
+                else
+                {
+                    if (read1 == 6 & player1.Fishka1 > 0)
+                    {
+                        player1.Fishka1--;
+                        for (int i = 0; i < 5; i++)
+                        {
+                            int swapper;
+                            swapper = player1.Cards[i];
+                            player1.Cards[i] = player2.Cards[i];
+                            player2.Cards[i] = swapper;
+                        }
+                    }
+                    if(read1 == 6 & player1.Fishka1 == 0)
+                    {
+                        Console.WriteLine("у тебя нет этой фишки");
+                        s = 99999;
+                    }
+                    if (read1 == 7 & player1.Fishka2 > 0)
+                    {
+                        player1.Fishka2--;
+                        Console.WriteLine("write your card to chenge it");
+                        read1 = int.Parse(Console.ReadLine());
+                        int u = read1;
+                        Console.WriteLine("write card your frend to chenge it");
+                        read1 = int.Parse(Console.ReadLine());
+                        int swapper;
+                        swapper = player1.Cards[u - 1];
+                        player1.Cards[u - 1] = player2.Cards[read1 - 1];
+                        player2.Cards[read1 - 1] = swapper;
+                    }
+                    if (read1 == 7 & player1.Fishka2 == 0)
+                    {
+                        Console.WriteLine("у тебя нет этой фишки");
+                        s = 99999;
+                    }
+                }
+                if (s > 60)
+                {
+                    Console.WriteLine("Player2 is won!");
+                    break;
+                }
+                Console.WriteLine($"summ is {s}");
+                Console.WriteLine($"cards player1 {player1.Cards[0]},{player1.Cards[1]},{player1.Cards[2]},{player1.Cards[3]},{player1.Cards[4]},Fishek1 {player1.Fishka1},Fishek2 {player1.Fishka2}");
+                Console.WriteLine($"cards player2 {player2.Cards[0]},{player2.Cards[1]},{player2.Cards[2]},{player2.Cards[3]},{player2.Cards[4]},Fishek1 {player2.Fishka1},Fishek2 {player2.Fishka2}");
+                Console.WriteLine("write number of card(1-5) or 6 to use fishka1 or 7 to use fishka2");
+                Console.WriteLine("Player2");
+                int read2 = int.Parse(Console.ReadLine());
+                if (read2 < 6)
+                {
+                    s += player2.Cards[read2 - 1];
+                    player2.Cards.RemoveAt(read2 - 1);
+                    int num = rnd.Next(0, 12);
+                    while (AllCards[num] == 0)
+                    {
+                        num = rnd.Next(0, 12);
+                    }
+                    player2.Cards.Add(num + 2);
+                    AllCards[num]--;
+                }
+                else
+                {
+                    if (read2 == 6 & player2.Fishka1 > 0)
+                    {
+                        player2.Fishka1--;
+                        for (int i = 0; i < 5; i++)
+                        {
+                            int swapper;
+                            swapper = player1.Cards[i];
+                            player1.Cards[i] = player2.Cards[i];
+                            player2.Cards[i] = swapper;
+                        }
+                    }
+                    if (read2 == 6 & player2.Fishka1 == 0)
+                    {
+                        Console.WriteLine("у тебя нет этой фишки");
+                        s = 99999;
+                    }
+                    if (read2 == 7 & player2.Fishka2 > 0)
+                    {
+                        player2.Fishka2--;
+                        Console.WriteLine("write your card to chenge it");
+                        read2 = int.Parse(Console.ReadLine());
+                        int u = read2;
+                        Console.WriteLine("write card your frend to chenge it");
+                        read2 = int.Parse(Console.ReadLine());
+                        int swapper;
+                        swapper = player2.Cards[u - 1];
+                        player2.Cards[u - 1] = player1.Cards[read2-1];
+                        player1.Cards[read2-1] = swapper;
+                    }
+                    if (read2 == 7 & player2.Fishka2 == 0)
+                    {
+                        Console.WriteLine("у тебя нет этой фишки");
+                        s = 99999;
+                    }
+                }
+                if (s > 60)
+                {
+                    Console.WriteLine("Player1 is won!");
+                    break;
+                }
+
+            }
+        }
+    }
+}
